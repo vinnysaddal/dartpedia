@@ -1,19 +1,12 @@
 import 'dart:io';
 import 'package:http/http.dart' as http;
+import 'package:command_runner/command_runner.dart';
 
 const version = '0.0.1';
 
-void main(List<String> arguments) {
-  if (arguments.isEmpty || arguments.first == 'help') {
-    printUsage();
-  } else if (arguments.first == 'version'){
-  print('Dartpedia CLI version $version');
-  } else if (arguments.first == 'wikipedia') {
-    final inputArgs = arguments.length > 1 ? arguments.sublist(1) : null; // '?' - ternary conditional "operator condition ? valueIfTrue : valueIfFalse"
-    searchWikipedia(inputArgs);
-  } else {
-    printUsage();
-  }
+void main(List<String> arguments) async { // main is now async and awaits the runner
+  var runner = CommandRunner(); // Create instance of CommandRunner
+  await runner.run(arguments); // Call its run method, awaiting its Future<void>
 }
 
 void searchWikipedia(List<String>? arguments) async { // ? means that arguments list can be null
